@@ -81,23 +81,26 @@ infrastructure/waf-cf-lambda-cdk/
 
 ```bash
 cd infrastructure/waf-cf-lambda-cdk
-
 npm install
 npm run build
-
 cdk deploy WafCfLambdaStackUsEast1
+```
 
 ✅ 動作確認
 Web配信確認
 
+```bash
 curl -I https://seiyachiba-portfolio.com
+```
 
 問い合わせAPI確認（例）
 
+```bash
 curl -X POST \
   https://{API_ID}.execute-api.ap-northeast-1.amazonaws.com/prod/contact \
   -H "content-type: application/json" \
   -d '{"name":"test","email":"test@example.com","message":"hello"}'
+```
 
 🧠 学びと工夫（運用視点）
 
