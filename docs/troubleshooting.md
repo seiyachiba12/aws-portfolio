@@ -75,6 +75,7 @@
 
 ```bash
 curl -I https://seiyachiba-portfolio.com
+```
 
 見るべきポイント：
 
@@ -123,10 +124,12 @@ curlで 500 が返る
 
 Step1：API Gatewayが動いているか確認
 
+```bash
 curl -X POST \
   https://wl8x8hrpfc.execute-api.ap-northeast-1.amazonaws.com/prod/contact \
   -H "content-type: application/json" \
   -d '{"name":"test","email":"test@example.com","message":"hello"}'
+```
 
 結果別に分岐
 ✅ 200ならOK
@@ -157,8 +160,10 @@ API GatewayのCORS設定不足
 
 Allowed Origin に以下があるか
 
+```bash
 https://seiyachiba-portfolio.com
 https://www.seiyachiba-portfolio.com
+```
 
 3. Lambda障害（最重要）
 3.1 Lambdaのログを見る
@@ -205,7 +210,9 @@ console.log("event =", JSON.stringify(event))
 
 例：
 
+```bash
 AccessDenied: not authorized to perform s3:PutObject
+```
 
 対策：
 
@@ -238,10 +245,12 @@ CONTACT_BUCKET=seiyachiba-contact-logs
 
 CloudWatch Logs InsightsでBLOCKを見る：
 
+```md
 fields @timestamp, action, httpRequest.clientIp, terminatingRuleId
 | filter action="BLOCK"
 | sort @timestamp desc
 | limit 20
+```
 
 
 見るべきもの：
