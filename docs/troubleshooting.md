@@ -162,6 +162,8 @@ Allowed Origin に以下があるか
 
 ```bash
 https://seiyachiba-portfolio.com
+```
+```bash
 https://www.seiyachiba-portfolio.com
 ```
 
