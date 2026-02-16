@@ -35,7 +35,7 @@
 ## 4. 日次チェック（5分）
 
 ### 4.1 Web疎通
-```bash
+
 curl -I https://seiyachiba-portfolio.com
 
 期待値（例）
