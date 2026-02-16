@@ -44,19 +44,19 @@ HTTP/2 200 または 304
 
 via: ...cloudfront... が含まれる
 
-4.2 問い合わせAPI疎通
+### 4.2 問い合わせAPI疎通
 
 curl -X POST \
   https://wl8x8hrpfc.execute-api.ap-northeast-1.amazonaws.com/prod/contact \
   -H "content-type: application/json" \
   -d '{"name":"test","email":"test@example.com","message":"hello"}'
 
-4.3 問い合わせログ（S3）確認
+### 4.3 問い合わせログ（S3）確認
 
 問い合わせ送信後、問い合わせ保存用S3バケット（seiyachiba-contact-logs）にJSONが追加されていること
 
-5. 監視（CloudWatch）
-5.1 確認するもの
+## 5. 監視（CloudWatch）
+### 5.1 確認するもの
 
 CloudWatch Dashboard: portfolio-contact-monitor
 
@@ -68,12 +68,12 @@ APIGW-5xx-portfolio-contact-api-prod
 
 APIGW-4xxSpike-portfolio-contact-api-prod（4xxはスパイク検知運用）
 
-5.2 アラート通知
+### 5.2 アラート通知
 
 SNS Topic: portfolio-alerts（メール通知）
 
-6. WAF運用（CloudFront前段）
-6.1 方針
+## 6. WAF運用（CloudFront前段）
+### 6.1 方針
 
 まずはManaged Rules中心で広く防御
 
@@ -81,7 +81,7 @@ SNS Topic: portfolio-alerts（メール通知）
 
 ログをCloudWatch Logs Insightsで集計し、根拠を持って調整
 
-6.2 Logs Insights（集計例）
+### 6.2 Logs Insights（集計例）
 
 ※ロググループ名は環境に合わせて選択（例: aws-waf-logs-portfolio-waf-cf）
 
@@ -109,25 +109,25 @@ fields @timestamp, action, httpRequest.uri
 | sort cnt desc
 | limit 20
 
-7. デプロイ（手動：CloudShell）
-7.1 前提
+## 7. デプロイ（手動：CloudShell）
+### 7.1 前提
 
 CDKコードは infrastructure/waf-cf-lambda-cdk/ 配下
 
 CloudFront + WAF（グローバル相当）は us-east-1 を利用する構成
 
-7.2 ビルド
+### 7.2 ビルド
 
 cd ~/aws-portfolio/infrastructure/waf-cf-lambda-cdk
 npm ci
 npm run build
 
-7.3 デプロイ
+### 7.3 デプロイ
 
 cdk deploy WafCfLambdaStackUsEast1 --require-approval never
 
-8. 障害対応（入口）
-8.1 症状別の最短ルート
+## 8. 障害対応（入口）
+### 8.1 症状別の最短ルート
 
 Webが見れない
 
@@ -141,7 +141,7 @@ API Gatewayは「入口」で、原因はLambda例外のことが多い
 
 CloudWatch LogsでLambdaのSTART/END/REPORTを1実行単位で確認
 
-8.2 Lambdaログの見方（1実行を切り出す）
+### 8.2 Lambdaログの見方（1実行を切り出す）
 
 START RequestId ...
 
@@ -153,7 +153,7 @@ REPORT RequestId ...
 
 スタックトレースがあれば、行番号・キー不足・権限不足（S3 PutObject等）を優先して潰す。
 
-9. 変更管理（最低限）
+## 9. 変更管理（最低限）
 
 変更前に影響範囲を一言でメモ（READMEの変更履歴でも可）
 
