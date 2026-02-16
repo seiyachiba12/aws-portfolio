@@ -10,12 +10,12 @@ AWSを中心にクラウドインフラを学習しており、
 - AWS WAF + CloudWatch によるセキュリティ監視
 - AWS CDK（TypeScript）でIaC化して再現可能に整理
 
-## 🔗 ポートフォリオ
+## 🔗 ポートフォリオリンク
 
 - 公開サイト：https://seiyachiba-portfolio.com  
 - GitHub（メイン）：https://github.com/seiyachiba12/aws-portfolio
 - 
-# AWSサーバレスポートフォリオ  
+## AWSサーバレスポートフォリオ  
 （CloudFront + S3 + WAF + Lambda + API Gateway + CDK）
 
 AWS上で独自ドメイン付きのサーバレスWebシステムを構築しました。  
