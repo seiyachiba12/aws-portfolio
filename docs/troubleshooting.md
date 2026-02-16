@@ -113,7 +113,7 @@ S3に index.html が存在しない
 
 S3バケットに index.html があるか
 
-2.2 問い合わせフォームが送信できない（API Gateway）
+## 2.2 問い合わせフォームが送信できない（API Gateway）
 症状例
 
 POSTすると失敗する
@@ -165,13 +165,13 @@ https://seiyachiba-portfolio.com
 https://www.seiyachiba-portfolio.com
 ```
 
-3. Lambda障害（最重要）
-3.1 Lambdaのログを見る
+# 3. Lambda障害（最重要）
+## 3.1 Lambdaのログを見る
 CloudWatch Logsへ行く場所
 
 AWS Console → Lambda → portfolio-contact-handler → Monitor → Logs
 
-3.2 ログの読み方（鉄板）
+## 3.2 ログの読み方（鉄板）
 
 Lambdaログは必ずこの順で見る：
 
@@ -193,7 +193,7 @@ REPORT RequestId ...
 
 この塊を1つ切り出す。
 
-3.3 典型的な原因
+## 3.3 典型的な原因
 パターン1：eventの中身が想定と違う
 
 例：
@@ -234,7 +234,7 @@ Lambda環境変数を確認：
 
 CONTACT_BUCKET=seiyachiba-contact-logs
 
-4. WAFが弾いているケース
+# 4. WAFが弾いているケース
 症状
 
 特定のIPだけアクセスできない
@@ -245,7 +245,7 @@ CONTACT_BUCKET=seiyachiba-contact-logs
 
 CloudWatch Logs InsightsでBLOCKを見る：
 
-```md
+```sql
 fields @timestamp, action, httpRequest.clientIp, terminatingRuleId
 | filter action="BLOCK"
 | sort @timestamp desc
@@ -259,7 +259,7 @@ clientIp
 
 terminatingRuleId（どのルールで止まったか）
 
-5. 障害対応の結論テンプレ
+# 5. 障害対応の結論テンプレ
 
 障害報告はこうまとめる：
 
@@ -278,7 +278,7 @@ terminatingRuleId（どのルールで止まったか）
 「API Gatewayは正常だがLambdaで例外発生。原因はS3 PutObject権限不足。
 IAM修正後に復旧。再発防止としてCloudWatch Alarmを追加。」
 
-6. 次に強化する改善案
+# 6. 次に強化する改善案
 
 Lambda例外をSlack/SNS通知する
 
