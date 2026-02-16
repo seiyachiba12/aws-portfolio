@@ -8,7 +8,7 @@ API Gateway + Lambdaによる問い合わせ処理まで実装し、
 
 ---
 
-## 📌 目的（実務スキル証明）
+## 目的（実務スキル証明）
 
 本ポートフォリオは、クラウド運用エンジニアとして必要な
 
@@ -22,13 +22,13 @@ API Gateway + Lambdaによる問い合わせ処理まで実装し、
 ---
 
 
-## 🌍 公開サイト
+## 公開サイト
 
 - Webサイト: https://seiyachiba-portfolio.com
 
 ---
 
-## 📌 アーキテクチャ概要
+## アーキテクチャ概要
 
 ユーザーアクセスはCloudFrontで受け、OAC経由で非公開S3へ配信します。  
 問い合わせはAPI Gateway → Lambda → S3に保存され、CloudWatchで監視します。
@@ -54,7 +54,7 @@ API Gateway + Lambdaによる問い合わせ処理まで実装し、
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 - diagrams/ : アーキテクチャ図
 - docs/     : 運用・障害対応手順
@@ -66,7 +66,7 @@ infrastructure/waf-cf-lambda-cdk/
 
 ---
 
-## 🏗 構成要素
+## 構成要素
 
 ### 静的Web配信（フロント）
 
@@ -114,7 +114,7 @@ infrastructure/waf-cf-lambda-cdk/
 
 ---
 
-## 📦 IaC（AWS CDK）の再現性
+## IaC（AWS CDK）の再現性
 
 本構成はAWS CDK（TypeScript）でIaC化しており、  
 CloudShell上で同一環境を再現できます。
@@ -126,7 +126,7 @@ infrastructure/waf-cf-lambda-cdk/
 
 ---
 
-## 🚀 デプロイ手順（再現可能）
+## デプロイ手順（再現可能）
 
 ```bash
 cd infrastructure/waf-cf-lambda-cdk
@@ -135,7 +135,7 @@ npm run build
 cdk deploy WafCfLambdaStackUsEast1
 ```
 
-## ✅ 動作確認
+## 動作確認
 Web配信確認
 
 ```bash
@@ -153,7 +153,7 @@ curl -X POST \
 
 ---
 
-## 🧠 学びと工夫（運用視点）
+## 学びと工夫（運用視点）
 
 CloudFront + OAC構成により、S3を完全非公開化しセキュアな配信を実現
 
@@ -165,7 +165,7 @@ API Gatewayの500エラーをCloudWatch Logsで切り分ける運用手順を確
 
 ---
 
-## 🔥 トラブルシューティング経験（実務想定）
+## トラブルシューティング経験（実務想定）
 
 本構成では、構築中に実際に以下の障害が発生しました。
 
@@ -206,7 +206,7 @@ API Gatewayの500エラーをCloudWatch Logsで切り分ける運用手順を確
 
 ---
 
-## 🛣 今後の拡張ロードマップ（運用改善）
+## 今後の拡張ロードマップ（運用改善）
 
 本ポートフォリオは「構築して終わり」ではなく、  
 実務運用を想定して継続的に改善できる形を目指しています。
@@ -231,7 +231,7 @@ API Gatewayの500エラーをCloudWatch Logsで切り分ける運用手順を確
 
 ---
 
-## 📘 運用ドキュメント
+## 運用ドキュメント
 
 運用・障害対応手順は以下に整理しています。
 
