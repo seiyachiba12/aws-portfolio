@@ -120,8 +120,11 @@ docs/ に運用手順・障害対応フローを体系化
 
 CI/CD（GitHub Actions）による自動デプロイ検討
 
-📘 ドキュメント
+---
 
-運用メモ（Operations）
+## 📘 運用ドキュメント
 
-障害対応メモ（Troubleshooting）
+運用・障害対応手順は以下に整理しています。
+
+- [運用メモ（Operations）](docs/operations.md)
+- [障害対応メモ（Troubleshooting）](docs/troubleshooting.md)
