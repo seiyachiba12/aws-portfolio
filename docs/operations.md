@@ -36,18 +36,15 @@
 
 ### 4.1 Web疎通
 
-```md
 ```bash
 curl -I https://seiyachiba-portfolio.com
 ```
 
-```md
 期待値（例）
 
 HTTP/2 200 または 304
 
 via: ...cloudfront... が含まれる
-```
 
 ### 4.2 問い合わせAPI疎通
 
