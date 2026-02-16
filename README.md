@@ -94,6 +94,5 @@ curl -X POST \
 - docs/ に運用手順・障害対応フローを体系的に整理する  
 
 ---
-## 🗺 アーキテクチャ図
+![アーキテクチャ図](diagrams/architecture.png)
 
-![AWS Serverless Portfolio Architecture](diagrams/architecture.png)
