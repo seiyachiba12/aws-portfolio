@@ -32,28 +32,32 @@
 
 ---
 
+```md
 ## 4. 日次チェック（5分）
 
 ### 4.1 Web疎通
 
+```md
 ```bash
-
 curl -I https://seiyachiba-portfolio.com
-
 ```
 
+```md
 期待値（例）
 
 HTTP/2 200 または 304
 
 via: ...cloudfront... が含まれる
+```
 
 ### 4.2 問い合わせAPI疎通
 
+```bash
 curl -X POST \
   https://wl8x8hrpfc.execute-api.ap-northeast-1.amazonaws.com/prod/contact \
   -H "content-type: application/json" \
   -d '{"name":"test","email":"test@example.com","message":"hello"}'
+```
 
 ### 4.3 問い合わせログ（S3）確認
 
@@ -91,27 +95,33 @@ SNS Topic: portfolio-alerts（メール通知）
 
 BLOCKされたIPランキング
 
+```sql
 fields @timestamp, action, httpRequest.clientIp
 | filter action = "BLOCK"
 | stats count() as cnt by httpRequest.clientIp
 | sort cnt desc
 | limit 20
+```
 
 BLOCKされたルールランキング
 
+```sql
 fields @timestamp, action, terminatingRuleId
 | filter action = "BLOCK"
 | stats count() as cnt by terminatingRuleId
 | sort cnt desc
 | limit 20
+```
 
 URI別のBLOCK傾向
 
+```sql
 fields @timestamp, action, httpRequest.uri
 | filter action = "BLOCK"
 | stats count() as cnt by httpRequest.uri
 | sort cnt desc
 | limit 20
+```
 
 ## 7. デプロイ（手動：CloudShell）
 ### 7.1 前提
