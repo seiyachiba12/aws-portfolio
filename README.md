@@ -59,6 +59,9 @@ Stack名:
 - WafCfLambdaStackUsEast1
 
 ---
+## 📦 IaC（AWS CDK）
+CDKプロジェクト: `infrastructure/waf-cf-lambda-cdk/`
+
 
 ## ✅ 動作確認
 
