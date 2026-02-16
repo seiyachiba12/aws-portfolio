@@ -60,7 +60,20 @@ Stack名:
 
 ---
 ## 📦 IaC（AWS CDK）
-CDKプロジェクト: `infrastructure/waf-cf-lambda-cdk/`
+
+本構成はAWS CDK（TypeScript）でIaC化しています。
+
+CDKコード配置:
+
+infrastructure/waf-cf-lambda-cdk/
+
+### Deploy
+
+```bash
+cd infrastructure/waf-cf-lambda-cdk
+npm install
+npm run build
+cdk deploy WafCfLambdaStackUsEast1
 
 
 ## ✅ 動作確認
