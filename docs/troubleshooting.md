@@ -178,13 +178,15 @@ JSON.parseで落ちる
 
 対策：
 
+```js
 console.log("event =", JSON.stringify(event))
+```
 
 パターン2：S3 PutObject権限不足
 
 例：
 
-```bash
+```text
 AccessDenied: not authorized to perform s3:PutObject
 ```
 
