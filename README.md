@@ -1,3 +1,20 @@
+## 👋 自己紹介
+
+AWSを中心にクラウドインフラを学習しており、  
+サーバレス構成のポートフォリオを個人で構築しています。
+
+## ☁️ 主な取り組み
+
+- CloudFront + S3（OAC）による静的サイト配信
+- API Gateway + Lambda による問い合わせAPI
+- AWS WAF + CloudWatch によるセキュリティ監視
+- AWS CDK（TypeScript）でIaC化して再現可能に整理
+
+## 🔗 ポートフォリオ
+
+- 公開サイト：https://seiyachiba-portfolio.com  
+- GitHub（メイン）：https://github.com/seiyachiba12/aws-portfolio
+- 
 # AWSサーバレスポートフォリオ  
 （CloudFront + S3 + WAF + Lambda + API Gateway + CDK）
 
