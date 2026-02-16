@@ -137,19 +137,14 @@ npm run build
 cdk deploy WafCfLambdaStackUsEast1 --require-approval never
 
 ## 8. 障害対応（入口）
-### 8.1 症状別の最短ルート
+### 8.1 Webが見れない場合
+1. CloudFrontのエラー（403/404/502）を確認  
+2. S3(OAC)設定と Default root object（index.html）を確認  
 
-Webが見れない
+### 問い合わせが失敗する場合（500）
+1. API Gatewayは入口なのでLambda例外を疑う  
+2. CloudWatch LogsでSTART/END/REPORTを確認  
 
-CloudFrontのエラー（403/404/502）か確認
-
-S3（OAC）設定、Default root object（index.html）を確認
-
-問い合わせが失敗（500）
-
-API Gatewayは「入口」で、原因はLambda例外のことが多い
-
-CloudWatch LogsでLambdaのSTART/END/REPORTを1実行単位で確認
 
 ### 8.2 Lambdaログの見方（1実行を切り出す）
 
