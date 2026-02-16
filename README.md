@@ -14,7 +14,7 @@ AWSを中心にクラウドインフラを学習しており、
 
 - 公開サイト：https://seiyachiba-portfolio.com  
 - GitHub（メイン）：https://github.com/seiyachiba12/aws-portfolio
-- 
+
 ## AWSサーバレスポートフォリオ  
 （CloudFront + S3 + WAF + Lambda + API Gateway + CDK）
 
