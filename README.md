@@ -95,3 +95,11 @@ curl -X POST \
 ---
 ![アーキテクチャ図](diagrams/architecture.png)
 
+---
+
+## 📘 運用ドキュメント
+
+- [運用メモ（Operations）](docs/operations.md)
+- [障害対応メモ（Troubleshooting）](docs/troubleshooting.md)
+
+---
