@@ -1,9 +1,10 @@
 # Troubleshooting（障害対応手順）
 
-このドキュメントは、本ポートフォリオ環境で障害が起きたときに  
-最短で原因へ到達するための切り分け手順をまとめたものです。
+このドキュメントは、私のポートフォリオ（https://seiyachiba-portfolio.com）
+の環境で障害が起きたときに最短で原因へ到達するための切り分け手順をまとめたものです。
+基本的な失敗をはじめ、ＩＴＩＬ運用の思考を参考にして工夫して１つ１つ原因を切り分け→調査して対応したものです。
 
-対象構成：
+ポートフォリオの構成：
 
 - CloudFront + S3（静的サイト配信）
 - API Gateway（HTTP API）
@@ -17,12 +18,14 @@
 # 1. 障害対応の基本方針
 
 ## 最初に必ずやること
+→どの階層で起こっているのか切り分け意識を持つ
+今回はクラウドアーキテクチャなので、
 
 1. 入口で止まっているのか？
 2. 中身（Lambda）で落ちているのか？
 3. 設定ミスか？権限か？コードか？
 
-障害はほぼこの3つに分類できる。
+から意識する。基本的に障害はほぼこの3つに分類できる。
 
 ---
 
@@ -34,7 +37,7 @@
 
 ### 症状例
 
-- ブラウザで真っ白
+- ブラウザで真っ白になる
 - 403 AccessDenied
 - 404 Not Found
 - 502 Bad Gateway
@@ -53,17 +56,18 @@ curl -I https://seiyachiba-portfolio.com
 
 HTTPステータス（200/403/404/502）
 
-via: cloudfront があるか
+レスポンスヘッダにvia: cloudfront があるか
+（CloudFront を経由して返されたという意味）
 
-Step2：403の場合（S3が非公開すぎる）
+Step2：403の場合（S3が非公開になりやすい設定になっている）
 
 原因候補：
 
-OAC設定ミス
+OACの設定ミス
 
-S3バケットポリシー不足
+S3バケットポリシーが不足していた
 
-Default root object が未設定
+Default root object を未設定
 
 確認：
 
@@ -73,13 +77,13 @@ S3 → Public Access Block ON（正常）
 
 CloudFront OAC → S3許可ポリシーがあるか
 
-Step3：404の場合（ファイルが無い）
+Step3：404の場合（万が一ファイル自体が無い場合）
 
 原因候補：
 
 S3に index.html が存在しない
 
-パスが間違っている
+又はパスが間違っている
 
 確認：
 
@@ -103,26 +107,25 @@ curl -X POST \
   -d '{"name":"test","email":"test@example.com","message":"hello"}'
 ```
 
-結果別に分岐
-✅ 200ならOK
+通信応答を結果別に記します。
+
+〇 200　→OK
 
 API GatewayもLambdaも正常。
 
-❌ 500 Internal Server Error
+✕ 500 Internal Server Error
 
-ほぼ確実に原因はLambda。
+ならば原因はLambda。（ほぼ確実だと思います。）
 
-次へ。
-
-❌ 403 Forbidden
+✕ 403 Forbidden
 
 原因候補：
 
-IAM権限不足
+IAMの権限不足
 
 LambdaがS3 PutObjectできない
 
-❌ CORS error（ブラウザだけ失敗）
+✕ CORS error（ブラウザ経由のアクセスからは失敗）
 
 原因候補：
 
@@ -130,7 +133,7 @@ API GatewayのCORS設定不足
 
 確認：
 
-Allowed Origin に以下があるか
+Allowed Origin に以下があるかを確認
 
 ```bash
 https://seiyachiba-portfolio.com
@@ -141,11 +144,11 @@ https://www.seiyachiba-portfolio.com
 
 # 3. Lambda障害（最重要）
 ## 3.1 Lambdaのログを見る
-CloudWatch Logsへ行く場所
+CloudWatch Logsを参照する
 
 AWS Console → Lambda → portfolio-contact-handler → Monitor → Logs
 
-## 3.2 ログの読み方（鉄板）
+## 3.2 ログの読み方
 
 Lambdaログは必ずこの順で見る：
 
@@ -165,10 +168,10 @@ ERROR ...
 END RequestId ...
 REPORT RequestId ...
 
-この塊を1つ切り出す。
+この塊を1つ切り出して見る。
 
 ## 3.3 典型的な原因
-パターン1：eventの中身が想定と違う
+パターン1：eventの中身が想定したものと違っていた
 
 例：
 
@@ -182,7 +185,7 @@ JSON.parseで落ちる
 console.log("event =", JSON.stringify(event))
 ```
 
-パターン2：S3 PutObject権限不足
+パターン2：S3 PutObject権限の不足
 
 例：
 
@@ -233,11 +236,13 @@ fields @timestamp, action, httpRequest.clientIp, terminatingRuleId
 
 clientIp
 
-terminatingRuleId（どのルールで止まったか）
+terminatingRuleId（どのルールで止まったかを見る）
 
-# 5. 障害対応の結論テンプレ
+# 5. 障害対応の結論の記録形式（念のため載せます）
 
-障害報告はこうまとめる：
+障害報告はこうまとめる。報告の際は結論から伝えること
+
+日時：
 
 症状：
 
@@ -251,18 +256,6 @@ terminatingRuleId（どのルールで止まったか）
 
 例：
 
-「API Gatewayは正常だがLambdaで例外発生。原因はS3 PutObject権限不足。
-IAM修正後に復旧。再発防止としてCloudWatch Alarmを追加。」
-
-# 6. 次に強化する改善案
-
-Lambda例外をSlack/SNS通知する
-
-APIのバリデーション追加
-
-WAF Rate-based rule追加
-
-IaCで完全再現（CDK一本化）
-
-
-
+「API Gatewayは正常だがLambdaで例外発生したため調査。
+　原因はS3 PutObject権限の不足。
+　IAMを修正後に復旧を確認済み。再発防止としてCloudWatch Alarmを追加し運用中。」
