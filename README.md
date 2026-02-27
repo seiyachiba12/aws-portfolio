@@ -15,9 +15,9 @@
 
 設計思想は以下の4点です：
 
-・最小権限（Least Privilege）
-・エッジ防御（Edge Security）
-・完全サーバレス化
+・最小権限（Least Privilege）/
+・エッジ防御（Edge Security）/
+・完全サーバレス化/
 ・Infrastructure as Code による再現可能な管理
 
 単なるお問い合わせフォームではなく、
