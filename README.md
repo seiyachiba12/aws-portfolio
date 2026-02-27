@@ -45,7 +45,7 @@ API Gateway + Lambdaによる問い合わせ処理まで実装し、
 - CloudWatch Alarm + SNS通知で運用監視まで含めた
 
 ---
-## 運用・障害対応ドキュメント（強すぎる武器）
+## 運用・障害対応ドキュメント
 
 本環境は「作って終わり」ではなく、運用を前提に以下を整備しています。
 
@@ -155,19 +155,20 @@ curl -X POST \
 
 ## 学びと工夫（運用視点）
 
-CloudFront + OAC構成により、S3を完全非公開化しセキュアな配信を実現
+CloudFront + OAC構成により、S3を完全非公開化しセキュアな配信を実現しました。
 
-WAFログをCloudWatch Logs Insightsで分析し、不審アクセス傾向を可視化
+WAFログをCloudWatch Logs Insightsで分析し、不審アクセス傾向を可視化しました。
 
-コンソール構築した環境をAWS CDK(TypeScript)でIaC化し再現性を確保
+コンソール構築した環境をAWS CDK(TypeScript)でIaC化し再現性を確保しました。
 
-API Gatewayの500エラーをCloudWatch Logsで切り分ける運用手順を確立
+API Gatewayの500エラーをCloudWatch Logsで切り分ける運用手順を確立しました。
 
 ---
 
 ## トラブルシューティング経験（実務想定）
 
-本構成では、構築中に実際に以下の障害が発生しました。
+基礎的なものになりますが、本構成では構築中に実際に以下の障害が発生しました。
+なので、１つ１つ原因を切り分けて洗い出し、修正を重ねて知識をつけ対応いたしました。
 
 ### ケース：問い合わせAPIが常に500になる
 
@@ -212,22 +213,17 @@ API Gatewayの500エラーをCloudWatch Logsで切り分ける運用手順を確
 実務運用を想定して継続的に改善できる形を目指しています。
 
 ### Phase 1：安定運用（短期）
-- Lambda処理の例外ハンドリング強化
-- API入力バリデーション追加
-- CloudWatch Alarmの閾値調整と通知精度向上
+- Lambda処理の例外ハンドリングを強化する
+- API入力バリデーションを追加
+- CloudWatch Alarmの閾値調整と通知精度の向上
 
-### Phase 2：運用自動化（中期）
-- GitHub ActionsによるCI/CD導入（CDK deploy自動化）
-- デプロイ前後の自動テスト（curl / Lambda unit test）
+### Phase 2.1：運用自動化（中期）
+- デプロイ前後の自動テストの継続（curl / Lambda unit test）
 
-### Phase 3：セキュリティ強化（中長期）
+### Phase 2.2：セキュリティ強化（中期）
 - WAF Rate-based rule導入によるDoS対策
 - 監査ログ（CloudTrail）との統合
 - IAM最小権限ポリシーの継続改善
-
-### Phase 4：IaC統一（長期）
-- コンソール構築部分も含めてCDKで完全再現
-- マルチスタック構成の整理（Global / Regional分離）
 
 ---
 
