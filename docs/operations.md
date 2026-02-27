@@ -1,4 +1,4 @@
-# Operations（運用メモ）
+# 運用メモ　Operations
 
 このドキュメントは、AWSポートフォリオ（CloudFront + S3 + WAF + API Gateway + Lambda）の運用手順まとめたものです。
 
