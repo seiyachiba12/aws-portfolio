@@ -1,11 +1,12 @@
 # Troubleshooting（障害対応の手順）
 
-このドキュメントは、私のポートフォリオ（https://seiyachiba-portfolio.com）
+このドキュメントは、私のポートフォリオ
 の環境で障害が起きたときに最短で原因へ到達するための切り分け手順をまとめたものです。
 基本的な失敗をはじめ、ＩＴＩＬ運用の思考を参考にして、
 工夫して１つ１つ原因を切り分け→調査して直して対応したものになります。
 
 #  ポートフォリオの構成
+（https://seiyachiba-portfolio.com）
 
 - CloudFront + S3（静的サイト配信）
 - API Gateway（HTTP API）
