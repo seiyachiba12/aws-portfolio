@@ -11,7 +11,7 @@
 ### 4. 日次チェック
 ### 5. 監視（CloudWatch）
 ### 6. WAF運用
-### 7. デプロイ（手動：CloudShell）
+### 7. デプロイ
 ### 8. 障害対応
 ### 9. 変更時の管理
 
@@ -131,7 +131,7 @@ fields @timestamp, action, httpRequest.uri
 | limit 20
 ```
 
-## 7. デプロイ（手動：CloudShell）
+## 7. デプロイ
 ### 7.1 前提
 
 CDKコードは infrastructure/waf-cf-lambda-cdk/ 配下
