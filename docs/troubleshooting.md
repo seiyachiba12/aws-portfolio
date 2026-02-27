@@ -6,7 +6,7 @@
 工夫して１つ１つ原因を切り分け→調査して直して対応したものになります。
 
 #  ポートフォリオの構成
-（https://seiyachiba-portfolio.com）
+（ https://seiyachiba-portfolio.com ）
 
 - CloudFront + S3（静的サイト配信）
 - API Gateway（HTTP API）
