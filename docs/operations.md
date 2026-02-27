@@ -1,8 +1,19 @@
 # 運用メモ　Operations
 
 このドキュメントは、AWSポートフォリオ（CloudFront + S3 + WAF + API Gateway + Lambda）の運用手順まとめたものです。
-
+基礎的になりますが、意識するとしないとで成長速度が変わる内容のため記録いたしました。
 ---
+
+## 0.目次
+# 1. 対象システム
+# 2. 何を見て監視するか
+# 3. CloudWatchでどこを見るか
+# 4. 日次チェック
+# 5. 監視（CloudWatch）
+# 6. WAF運用
+# 7. デプロイ（手動：CloudShell）
+# 8. 障害対応
+# 9. 変更時の管理
 
 ## 1. 対象システム
 
@@ -32,7 +43,7 @@
 
 ---
 
-## 4. 日次チェック（5分）
+## 4. 日次チェック
 
 ### 4.1 Web疎通
 
@@ -138,6 +149,7 @@ npm run build
 cdk deploy WafCfLambdaStackUsEast1 --require-approval never
 
 ## 8. 障害対応
+※こちらはtroubleshooting.mdに詳細を記載しています。
 ### 8.1 Webが見れない場合
 1. CloudFrontのエラー（403/404/502）を確認  
 2. S3(OAC)設定と Default root object（index.html）を確認  
@@ -159,9 +171,9 @@ REPORT RequestId ...
 
 スタックトレースがあれば、行番号・キー不足・権限不足（S3 PutObject等）を優先して順に調査
 
-## 9. 変更管理（最低限）
+## 9. 変更時の管理
 
-変更前に影響範囲を一言でメモ（READMEの変更履歴でも残ことは可能）
+変更前に影響範囲を一言でメモしておく（READMEの変更履歴でも残せます）
 
 デプロイ後に以下を必ず確認
 
