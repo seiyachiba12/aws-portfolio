@@ -1,6 +1,6 @@
 # Operations（運用メモ）
 
-このドキュメントは、AWSポートフォリオ（CloudFront + S3 + WAF + API Gateway + Lambda）の運用手順を、第三者が見ても再現・運用できる形でまとめたものです。
+このドキュメントは、AWSポートフォリオ（CloudFront + S3 + WAF + API Gateway + Lambda）の運用手順まとめたものです。
 
 ---
 
@@ -14,7 +14,7 @@
 
 ---
 
-## 2. 監視対象（何を見るか）
+## 2. 何を見て監視するか
 
 - CloudFront アクセス状況（異常な4xx/5xx、急増）
 - API Gateway 5xx エラー（バックエンド障害の入口）
@@ -23,7 +23,7 @@
 
 ---
 
-## 3. CloudWatchで見る場所（どこを見るか）
+## 3. CloudWatchでどこを見るか
 
 - CloudWatch Logs → Lambda実行ログ
 - CloudWatch Metrics → API Gateway / Lambda
@@ -76,7 +76,7 @@ APIGW-4xxSpike-portfolio-contact-api-prod（4xxはスパイク検知運用）
 
 SNS Topic: portfolio-alerts（メール通知）
 
-## 6. WAF運用（CloudFront前段）
+## 6. WAF運用
 ### 6.1 方針
 
 まずはManaged Rules中心で広く防御
@@ -84,10 +84,11 @@ SNS Topic: portfolio-alerts（メール通知）
 必要に応じてIPブロックやRate-basedで追加防御
 
 ログをCloudWatch Logs Insightsで集計し、根拠を持って調整
+（利用者へリーチ/安全性のバランスでルールを整える）
 
 ### 6.2 Logs Insights（集計例）
 
-※ロググループ名は環境に合わせて選択（例: aws-waf-logs-portfolio-waf-cf）
+※ロググループ名は環境に合わせて作成（例: aws-waf-logs-portfolio-waf-cf）
 
 BLOCKされたIPランキング
 
@@ -136,17 +137,17 @@ npm run build
 
 cdk deploy WafCfLambdaStackUsEast1 --require-approval never
 
-## 8. 障害対応（入口）
+## 8. 障害対応
 ### 8.1 Webが見れない場合
 1. CloudFrontのエラー（403/404/502）を確認  
 2. S3(OAC)設定と Default root object（index.html）を確認  
 
 ### 問い合わせが失敗する場合（500）
-1. API Gatewayは入口なのでLambda例外を疑う  
+1. API Gatewayは入口なのでLambda例外の可能性を疑う  
 2. CloudWatch LogsでSTART/END/REPORTを確認  
 
 
-### 8.2 Lambdaログの見方（1実行を切り出す）
+### 8.2 Lambdaログの見方（1つの実行を切り出す）
 
 START RequestId ...
 
@@ -156,19 +157,20 @@ END RequestId ...
 
 REPORT RequestId ...
 
-スタックトレースがあれば、行番号・キー不足・権限不足（S3 PutObject等）を優先して潰す。
+スタックトレースがあれば、行番号・キー不足・権限不足（S3 PutObject等）を優先して順に調査
 
 ## 9. 変更管理（最低限）
 
-変更前に影響範囲を一言でメモ（READMEの変更履歴でも可）
+変更前に影響範囲を一言でメモ（READMEの変更履歴でも残ことは可能）
 
 デプロイ後に以下を必ず確認
 
-curl -I のWeb疎通
+１．curl -I のWeb疎通
 
-問い合わせAPI疎通
+２．問い合わせAPI疎通
 
-CloudWatch Alarmの異常が出ていないこと
+３．CloudWatch Alarmの異常が出ていないこと
 
-WAFログの急増がないこと
+４．WAFログの急増がないこと
 
+以上
