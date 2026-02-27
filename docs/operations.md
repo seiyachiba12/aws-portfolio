@@ -77,7 +77,7 @@ curl -X POST \
 
 CloudWatch Dashboard: portfolio-contact-monitor
 
-Alarm（例）
+Alarmの例
 
 Lambda-portfolio-contact-handler-Errors
 
@@ -91,15 +91,16 @@ SNS Topic: portfolio-alerts（メール通知）
 
 ## 6. WAF運用
 ### 6.1 方針
+→利用者へリーチ/セキュリティ面での安全性バランスでルールを整える
 
 まずはManaged Rules中心で広く防御
 
 必要に応じてIPブロックやRate-basedで追加防御
 
 ログをCloudWatch Logs Insightsで集計し、根拠を持って調整
-（利用者へリーチ/安全性のバランスでルールを整える）
 
-### 6.2 Logs Insights（集計例）
+
+### 6.2 Logs Insights（集計の例）
 
 ※ロググループ名は環境に合わせて作成（例: aws-waf-logs-portfolio-waf-cf）
 
