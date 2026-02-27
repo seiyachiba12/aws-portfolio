@@ -187,6 +187,9 @@ REPORT RequestId ...
 event.body が空
 
 JSON.parseで落ちる
+（文字列として受け取ったデータが 
+“正しいJSON形式ではない” 
+ために例外が発生しているという意味。）
 
 対策：
 
