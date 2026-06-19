@@ -127,13 +127,13 @@ export class EdgeStack extends cdk.Stack {
     });
 
 // 3.5) WAF Full Logs -> CloudWatch Logs
-     new wafv2.CfnLoggingConfiguration(this, 'WafLogging', {
-	       resourceArn: webAcl.attrArn,
-	         logDestinationConfigs: [
-			     `arn:aws:logs:${this.region}:${this.account}:log-group:${wafLogGroup.logGroupName}`,
-			       ],
-     });
-         
+   //  new wafv2.CfnLoggingConfiguration(this, 'WafLogging', {
+	//       resourceArn: webAcl.attrArn,
+	//         logDestinationConfigs: [
+	//		     `arn:aws:logs:${this.region}:${this.account}:log-group:${wafLogGroup.logGroupName}`,
+        //		       ],
+   //  });
+        
 
     // 5) CloudFront Distribution（origin = Lambda URL）
     const originDomain = cdk.Fn.select(2, cdk.Fn.split('/', fnUrl.url));
@@ -147,7 +147,7 @@ export class EdgeStack extends cdk.Stack {
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
       },
-      webAclId: webAcl.attrArn,
+    // webAclId: webAcl.attrArn,
       comment: 'WAF + CloudFront + Lambda(Function URL) via CDK',
     });
 
